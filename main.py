@@ -17,7 +17,7 @@ def log_time(name, solution, args, kwargs):
         cases = args
     else:
         cases = zip(args, kwargs)
-    for case in cases:
+    for case, number in enumerate(cases):
         if kwargs is None:
             arg1 = deepcopy(case)
             arg2 = deepcopy(case)
@@ -29,7 +29,7 @@ def log_time(name, solution, args, kwargs):
             s, a = solution(*arg1, **kwarg1), answer(*arg2, **kwarg2)
         if s != a:
             Storage.results[name]['passed'] = False
-            Storage.results[name]['failed'] = {'user': s, 'answer': a}
+            Storage.results[name]['failed'] = {'user': s, 'answer': a, 'cases passed': number}
             break
 
 
