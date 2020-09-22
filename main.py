@@ -1,10 +1,11 @@
 import inspect
 import timeit
 import pprint
-import test1, test2
+import test1, test2, test3
 
 from copy import deepcopy
 from typing import List, Dict, Callable, Union
+
 
 
 def answer(x, *, y):
@@ -57,7 +58,7 @@ def test(solutions: Dict[str, Callable], args: List[tuple], kwargs: List[Dict[st
 
 
 def main():
-    solutions = {'test1': test1.solution, 'test2': test2.solution}
+    solutions = {'test1': test1.solution, 'test2': test2.solution, 'test3': test3.solution}
     args = [(1,), (2,), (7,), (4,)]
     kwargs = [{'y': 5}, {'y': 3}, {'y': 8}, {'y': 3}]
     pprint.pprint(test(solutions, args, kwargs=kwargs))
