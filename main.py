@@ -2,11 +2,8 @@ import inspect
 import timeit
 import pprint
 import test1, test2, test3
-
 from copy import deepcopy
 from typing import List, Dict, Callable, Union
-
-
 
 def answer(x, *, y):
     return x+y
@@ -17,7 +14,8 @@ def log_time(name, solution, args, kwargs):
         cases = args
     else:
         cases = zip(args, kwargs)
-    for case, number in enumerate(cases):
+    passed = total = 0
+    for case in cases:
         if kwargs is None:
             arg1 = deepcopy(case)
             arg2 = deepcopy(case)
@@ -29,8 +27,11 @@ def log_time(name, solution, args, kwargs):
             s, a = solution(*arg1, **kwarg1), answer(*arg2, **kwarg2)
         if s != a:
             Storage.results[name]['passed'] = False
-            Storage.results[name]['failed'] = {'user': s, 'answer': a, 'cases passed': number}
-            break
+            Storage.results[name]['failed'] = {'user': s, 'answer': a, 'cases passed': passed}
+        else:
+            passed += 1
+        total += 1
+    Storage.results[name]['total cases'] = total
 
 
 class Storage:
@@ -62,7 +63,6 @@ def main():
     args = [(1,), (2,), (7,), (4,)]
     kwargs = [{'y': 5}, {'y': 3}, {'y': 8}, {'y': 3}]
     pprint.pprint(test(solutions, args, kwargs=kwargs))
-
 
 
 if __name__ == '__main__':
